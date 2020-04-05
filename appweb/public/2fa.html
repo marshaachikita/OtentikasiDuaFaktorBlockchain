@@ -1,0 +1,12 @@
+<h3>Otentikasi Dua Faktor</h3>
+<p>Otentikasi akun ETH anda dengan {{loggedUser.address}}</p>
+<div>
+    <div ng-if="status == 'InProgress'" >
+        <p>Memverifikasi otentikasi smart contract...</p>
+        <divclass="progress">
+           <div id="progressBar" class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div>
+    </div>
+</div>
+    <button ng-if="status == 'NotAuthenticated'" class="btn btn-primary" type="submit" ng-click="authenticate()">Authenticate</button>
+</div>
+<div id="alertBox" ng-class="error.length ? 'is-invalid' : ''" class="alert alert-danger print-error-msg" style="margin-top: 20"> {{error}} </div>
