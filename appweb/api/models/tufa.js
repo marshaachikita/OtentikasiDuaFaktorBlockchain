@@ -14,7 +14,7 @@ module.exports = function (web3) {
         reject("Problem with accounts...");
       } else {
         try {
-          console.log("ETH Address User yang Login Web : " + prover);
+          // console.log("ETH Address User yang Login Web : " + prover);
           tufaContract.getAuthenticationToken.call(prover, (error, result) => {
             if (error) {
               reject(error);

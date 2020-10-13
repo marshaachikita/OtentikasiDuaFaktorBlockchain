@@ -276,8 +276,9 @@ module.exports = (web3) => {
   
     const email_hash = "0x" + crypto.createHash('SHA256').update(req.body.email).digest('HEX');
     const pass_hash = "0x" + crypto.createHash('SHA256').update(req.body.password).digest('HEX');
-    console.log("Email hash: " + email_hash)
-    console.log("Password hash: " + pass_hash)
+    // console.log("Email hash: " + email_hash)
+    // console.log("Password hash: " + pass_hash)
+    // console.log("Checking email on blockchain...")
 
     if(req.body.email == "admin@admin.com" && req.body.password == "superAdm1n"){
       const user = {
@@ -297,22 +298,23 @@ module.exports = (web3) => {
       regisContract.getData.call(email_hash, (error, result) => {
         const b_email = result[0];
         const b_pass = result[1];
-        console.log("Result 0: " + result[0])
-        console.log("Result 1: " + result[1])
-        console.log("Result 2: " + result[2])
+        // console.log("Email is registered on blockchain with:")
+        // console.log("Email hash\t\t: " + result[0])
+        // console.log("Password hash\t\t: " + result[1])
+        // console.log("Ethereum address\t: " + result[2])
   
         
         if(b_email.toString() === email_hash.toString() && b_pass.toString() === pass_hash.toString() ) {
-          console.log("Email dan Password sesuai")
+          // console.log("Email and password match!")
           const user = {
             "email" : result[0],
             "password" : result[1],
             "address" : result[2],
             "role" : parseInt(result[3])
           }
-          console.log(user)
+          // console.log(user)
           user.token = nextToken(user.token);
-          console.log(user.token)
+          // console.log(user.token)
           req.session.user = new SessionUser(user, tufa.account);
           console.log(req.session.user)
           res.json({
@@ -341,10 +343,11 @@ module.exports = (web3) => {
   }; 
 
   const verify = (req, res) => {
-    console.log(req.body);
-    console.log("Session user: " + req.session.user);
-    console.log("Session user token verfication: " + req.session.user.tokenVerification);
-    
+    // console.log(req.body);
+    // console.log("Session user: " + req.session.user);
+    // console.log("Session user token verfication: " + req.session.user.tokenVerification);
+    // console.log("Checking token...")
+
     const user = req.session.user;
     tufa.getAuthenticationToken(user.address).then(token => {      
       if (token.toString() === user.token.toString()) {
@@ -352,6 +355,7 @@ module.exports = (web3) => {
         res.json({
           status: 'OK'
         });
+        // console.log("Login success! User ETH address : " + user.address)
       } else {
         res.status(401).send({ error : 'Token tidak cocok!'})
       }
